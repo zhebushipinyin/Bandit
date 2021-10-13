@@ -43,3 +43,28 @@ def generate(n_repeat=32,
     df.index = range(len(df))
     df['block'] = np.repeat([1, 2, 3, 4], n_repeat)
     return df
+
+
+def generate_train(n=12,
+             ):
+    """
+    Generate exp data.
+    Returns the DataFrame contains the stimulus
+
+    Parameters
+    ----------
+    n : int
+        number of trials in train
+    Returns
+    -------
+    df : DataFrame
+    """
+    pic = ['box_train%s.png' % i for i in range(2)]
+    np.random.shuffle(pic)
+    df = pd.DataFrame()
+    df['p_cond'] = [0.5]*n
+    df['p_left'] = [0.5]*n
+    df['pic_left'] = np.repeat([pic[0]], n)
+    df['pic_right'] = np.repeat([pic[1]], n)
+    df['condition'] = 'Gain'
+    return df
