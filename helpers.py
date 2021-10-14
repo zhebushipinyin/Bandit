@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 
-def generate(n_repeat=32,
+def generate(n_repeat=35,
              ):
     """
     Generate exp data.
@@ -45,7 +45,7 @@ def generate(n_repeat=32,
     return df
 
 
-def generate_train(n=12,
+def generate_train(n=6,
              ):
     """
     Generate exp data.

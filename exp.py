@@ -32,9 +32,9 @@ a = h/720
 results = {
     'choice':[],'p_choose':[], 'result':[], 'rt': []
     }
-n_repeat = 32
+n_repeat = 35
 df = hp.generate(n_repeat=n_repeat)
-df_train = hp.generate_train(n=12)
+df_train = hp.generate_train(n=6)
 win = visual.Window(size=(w, h), fullscr=True, units='pix')
 # Text
 text = visual.TextStim(win, height=64 * h / 720, pos=(0, 0), wrapWidth=10000)
@@ -129,11 +129,21 @@ rt_last = 3
 clk.reset()
 for i in range(len(df)):
     if i in [n_repeat, n_repeat*3]:
+        text.text = "本房间探索结束，你累积%s分" % money_total
+        text.draw()
+        win.flip()
+        core.wait(2)
+        clk.reset()
         while clk.getTime()<10:
-            text.text = '请休息，%s秒后进入下一组'%int(clk.getTime())
+            text.text = '请休息，%s秒后进入下一组'%10-int(clk.getTime())
             text.draw()
             win.flip()
     elif i in [0, n_repeat*2]:
+        if i != 0:
+            text.text = "本房间探索结束，你累积%s分" % money_total
+            text.draw()
+            win.flip()
+            core.wait(2)
         if df['condition'][i] == 'Gain':
             intro.image = 'img/Condition_Gain.png'
         else:
