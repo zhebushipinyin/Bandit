@@ -45,7 +45,7 @@ def generate(n_repeat=35,
     return df
 
 
-def generate_train(n=6,
+def generate_train(n=5,
              ):
     """
     Generate exp data.

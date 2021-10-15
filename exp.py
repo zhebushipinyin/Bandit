@@ -34,11 +34,12 @@ results = {
     }
 n_repeat = 35
 df = hp.generate(n_repeat=n_repeat)
-df_train = hp.generate_train(n=6)
+df_train = hp.generate_train(n=5)
 win = visual.Window(size=(w, h), fullscr=True, units='pix')
 # Text
 text = visual.TextStim(win, height=64 * h / 720, pos=(0, 0), wrapWidth=10000)
 feedback = visual.TextStim(win, height=64 * h / 720, pos=(0, -100*a), wrapWidth=10000)
+progress = visual.TextStim(win, height=36*a, pos=(0, -320*a), wrapWidth=10000)
 # image
 box_left = visual.ImageStim(win, size=720*a/3, pos=(-200*a, 0))
 box_right = visual.ImageStim(win, size=720*a/3, pos=(200*a, 0))
@@ -128,6 +129,7 @@ money_total = 0
 rt_last = 3
 clk.reset()
 for i in range(len(df)):
+    progress.text = u'房间%s: %s/%s' % (df['block'][i], i%n_repeat + 1, n_repeat)
     if i in [n_repeat, n_repeat*3]:
         text.text = "本房间探索结束，你累积%s分" % money_total
         text.draw()
@@ -135,7 +137,7 @@ for i in range(len(df)):
         core.wait(2)
         clk.reset()
         while clk.getTime()<10:
-            text.text = '请休息，%s秒后进入下一组'%10-int(clk.getTime())
+            text.text = '请休息，%s秒后进入下一房间'%(10-int(clk.getTime()))
             text.draw()
             win.flip()
     elif i in [0, n_repeat*2]:
@@ -159,12 +161,14 @@ for i in range(len(df)):
     else:
         pic = loss
     fix.draw()
+    progress.draw()
     win.flip()
     clk.reset()
     while clk.getTime() <= 3.2 - rt_last:
         pass
     box_left.draw()
     box_right.draw()
+    progress.draw()
     win.flip()
     clk.reset()
     while True:
@@ -189,6 +193,7 @@ for i in range(len(df)):
             hand.draw()
             box_left.draw()
             box_right.draw()
+            progress.draw()
             win.flip()
             core.wait(0.5)
             if np.random.uniform() < p:
@@ -207,9 +212,10 @@ for i in range(len(df)):
                 feedback.pos = (0, 0)
                 results['result'].append(0)
             feedback.draw()
+            progress.draw()
             win.flip()
             core.wait(2)
-            win.flip()
+            # win.flip()
             break
         else:
             text.text = '请再快一点'
@@ -218,6 +224,7 @@ for i in range(len(df)):
             core.wait(1)
             box_left.draw()
             box_right.draw()
+            progress.draw()
             win.flip()
 
 df['choice'] = results['choice']
