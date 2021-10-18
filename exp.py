@@ -231,6 +231,9 @@ df['choice'] = results['choice']
 df['p_choose'] = results['p_choose']
 df['result'] = results['result']
 df['rt'] = results['rt']
+df['name'] = name
+df['sex'] = sex
+df['age'] = age
 df.to_csv('data/exp_%s_%s.csv' % (name, time.strftime("%y-%m-%d-%H-%M")))
 text.text = "本实验结束，你获得%s分" % money_total
 text.draw()
